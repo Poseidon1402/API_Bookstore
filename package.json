@@ -5,7 +5,7 @@
    "main": "server.ts",
    "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "ts-node src/server.ts",
+      "start": "nodemon",
       "typeorm": "typeorm-ts-node-commonjs",
       "db:create": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:create",
       "db:drop": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:drop"
