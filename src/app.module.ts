@@ -2,6 +2,7 @@ require('dotenv').config();
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Book } from './book/book.entity';
+import { BookController } from './book/book.controller';
 
 @Module({
     imports: [
@@ -16,7 +17,7 @@ import { Book } from './book/book.entity';
             synchronize: true,
         })
     ],
-    controllers: [],
+    controllers: [BookController],
     providers: [],
 })
 export class AppModule {}
