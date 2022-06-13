@@ -1,4 +1,17 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, HttpCode } from '@nestjs/common';
+import { DataSource } from 'typeorm';
+import { Book } from './book.entity';
 
-@Controller('book')
-export class BookController {}
+@Controller('books')
+export class BookController {
+
+
+    public constructor(private dataSource: DataSource){}
+
+    @Get()
+    @HttpCode(200)
+    public retrieveAllBooks(): Promise<Book[]>{
+        
+        return this.dataSource.manager.find(Book);
+    }
+}
