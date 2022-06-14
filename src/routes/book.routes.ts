@@ -1,5 +1,6 @@
 import * as express from 'express';
+import { BookController } from '../controllers/book.controller';
 
-const router: express.Router = express.Router();
+export const bookRouter: express.Router = express.Router();
 
-router.get('');
+bookRouter.get('', BookController.retrieveAllBooks);
