@@ -10,9 +10,11 @@ app.use(express.json());
 
 app.use('/books', bookRouter);
 
-(async () => {
-    await BookStore.initialize()
-});   
+BookStore.initialize()
+    .then(() => {
+        console.log('initialized')
+        return;
+    })
 
 server.listen(port, () => {
     console.log(`The server is listening on port ${port}...`);

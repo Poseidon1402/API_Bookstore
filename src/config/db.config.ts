@@ -10,7 +10,6 @@ export const dbconfig: any = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     connectTimeoutMS: 5000,
-    synchronize: true,
     logging: false,
     entities: [ __dirname + '/../entity/*.entity{.ts,.js}'],
     autoLoadEntities: true,
