@@ -4,3 +4,4 @@ import { BookOperation } from '../controllers/book.controller';
 export const bookRouter: express.Router = express.Router();
 
 bookRouter.get('', BookOperation.retrieveAllBooks);
+bookRouter.post('', BookOperation.saveBook);

@@ -10,4 +10,13 @@ export class BookOperation {
 
         return res.status(200).json(books);
     }
+
+    public static async saveBook(req: Request, res: Response, next: NextFunction): Promise<Response> {
+
+        await BookStore.manager.insert(Book, req.body);
+
+        return res.status(201).json({
+            message: 'The book was saved successfully'
+        });
+    }
 }
