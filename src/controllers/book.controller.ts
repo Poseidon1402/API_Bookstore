@@ -36,7 +36,7 @@ export class BookOperation {
         const book: BookObjectForModification = req.body;
         const result: UpdateResult = await BookStore.manager.update(Book, {book_number: req.params.id}, book);
 
-        // when any ressource was updated
+        // when no ressource was updated
         if(result.affected === 0) return res.status(404).json({ message: 'Ressource Not Found' });
 
         return res.status(200).json({
@@ -50,7 +50,7 @@ export class BookOperation {
             book_number: req.params.id
         })
 
-        // when any ressource was deleted
+        // when no ressource was deleted
         if(book.affected === 0) return res.status(404).json({ message: 'Ressource Not Found' });
 
         return res.status(200).json({
