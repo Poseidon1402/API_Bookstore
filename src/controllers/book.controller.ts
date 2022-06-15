@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { DeleteResult, UpdateResult } from "typeorm";
+import { DeleteResult, TypeORMError, UpdateResult } from "typeorm";
 import { BookStore } from "../data-source";
+import { BookObjectForCreation, BookObjectForModification } from "../dto/book.dto";
 import { Book } from "../entity/Book.entity";
 
 export class BookOperation {
@@ -8,13 +9,22 @@ export class BookOperation {
     public static async retrieveAllBooks(req: Request, res: Response, next: NextFunction): Promise<Response> {
 
         const books: Book[] = await BookStore.manager.find(Book);
-
+        
         return res.status(200).json(books);
     }
 
     public static async saveBook(req: Request, res: Response, next: NextFunction): Promise<Response> {
 
-        await BookStore.manager.insert(Book, req.body);
+        try {
+            const book: BookObjectForCreation = req.body;
+    
+            await BookStore.manager.insert(Book, book);
+        }catch(err: any){
+            
+            return res.status(400).json({
+                Error: err
+            })
+        }
 
         return res.status(201).json({
             message: 'The book was saved successfully',
@@ -23,10 +33,11 @@ export class BookOperation {
 
     public static async modifyBookInfo(req: Request, res: Response, next: NextFunction): Promise<Response> {
 
-        const book: UpdateResult = await BookStore.manager.update(Book, {book_number: req.params.id}, req.body);
+        const book: BookObjectForModification = req.body;
+        const result: UpdateResult = await BookStore.manager.update(Book, {book_number: req.params.id}, book);
 
         // when any ressource was updated
-        if(book.affected === 0) return res.status(404).json({ message: 'Ressource Not Found' });
+        if(result.affected === 0) return res.status(404).json({ message: 'Ressource Not Found' });
 
         return res.status(200).json({
             message: 'The ressource was updated successfully'
