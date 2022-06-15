@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response } from "express";
-import { DeleteResult, TypeORMError, UpdateResult } from "typeorm";
+import { Request, Response } from "express";
+import { DeleteResult, UpdateResult } from "typeorm";
 import { BookStore } from "../data-source";
 import { BookObjectForCreation, BookObjectForModification } from "../dto/book.dto";
 import { Book } from "../entity/Book.entity";
