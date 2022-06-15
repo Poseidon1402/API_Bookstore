@@ -6,14 +6,14 @@ import { Book } from "../entity/Book.entity";
 
 export class BookOperation {
 
-    public static async retrieveAllBooks(req: Request, res: Response, next: NextFunction): Promise<Response> {
+    public static async retrieveAllBooks(req: Request, res: Response): Promise<Response> {
 
         const books: Book[] = await BookStore.manager.find(Book);
         
         return res.status(200).json(books);
     }
 
-    public static async saveBook(req: Request, res: Response, next: NextFunction): Promise<Response> {
+    public static async saveBook(req: Request, res: Response): Promise<Response> {
 
         try {
             const book: BookObjectForCreation = req.body;
@@ -31,7 +31,7 @@ export class BookOperation {
         });
     }
 
-    public static async modifyBookInfo(req: Request, res: Response, next: NextFunction): Promise<Response> {
+    public static async modifyBookInfo(req: Request, res: Response): Promise<Response> {
 
         const book: BookObjectForModification = req.body;
         const result: UpdateResult = await BookStore.manager.update(Book, {book_number: req.params.id}, book);
@@ -44,7 +44,7 @@ export class BookOperation {
         })
     }
 
-    public static async removeBook(req: Request, res: Response, next: NextFunction): Promise<Response> {
+    public static async removeBook(req: Request, res: Response): Promise<Response> {
         
         const book: DeleteResult = await BookStore.manager.delete(Book, {
             book_number: req.params.id
