@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { DeleteResult, UpdateResult } from "typeorm";
+import { DeleteResult, UpdateResult, Like } from "typeorm";
 import { BookStore } from "../data-source";
 import { BookObjectForCreation, BookObjectForModification } from "../dto/book.dto";
 import { Book } from "../entity/Book.entity";
@@ -8,7 +8,10 @@ export class BookOperation {
 
     public static async retrieveAllBooks(req: Request, res: Response): Promise<Response> {
 
-        const books: Book[] = await BookStore.manager.find(Book);
+        const search = req.query.title && {title: Like('%'+req.query.title+'%')};
+        const books: Book[] = await BookStore.manager.find(Book, {
+            where: search
+        });
         
         return res.status(200).json(books);
     }
