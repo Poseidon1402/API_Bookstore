@@ -1,27 +1,23 @@
 import { Column, Entity, PrimaryColumn } from "typeorm"
 
-@Entity()
+@Entity("users")
 export class User {
 
-    @PrimaryColumn()
+    @PrimaryColumn({type: 'varchar', length: 25, nullable: false})
     code_user: string;
 
-    @Column()
+    @Column({type: 'varchar', length: 25, nullable: false})
     firstName: string;
 
-    @Column()
+    @Column({type: 'varchar', length: 25, nullable: false})
     lastName: string;
 
-    @Column()
+    @Column({type: 'varchar', length: 40, nullable: false})
     email: string;
 
-    @Column()
+    @Column({type: 'date', nullable: false})
     birthDate: Date;
 
-    @Column()
+    @Column({type: 'enum', enum: ['CLIENT', 'ADMIN', 'AUTOR']})
     role: "CLIENT" | "ADMIN" | "AUTOR";
-
-    constructor() {
-        this.code_user = this.role[0] + Date.now().toString();
-    }
 }
