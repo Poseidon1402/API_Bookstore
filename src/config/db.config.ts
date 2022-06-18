@@ -1,4 +1,5 @@
 import { Book } from "../entity/Book.entity";
+import { User } from "../entity/User.entity";
 
 require('dotenv').config();
 
@@ -11,7 +12,7 @@ export const dbconfig: any = {
     database: process.env.DB_NAME,
     connectTimeoutMS: 5000,
     logging: false,
-    entities: [ __dirname + '/../entity/*.entity{.ts,.js}'],
+    entities: [Book, User],
     autoLoadEntities: true,
     cli: {
         migrationsDir: "src/migration",
