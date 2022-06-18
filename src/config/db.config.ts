@@ -14,6 +14,7 @@ export const dbconfig: any = {
     logging: false,
     entities: [Book, User],
     autoLoadEntities: true,
+    synchronize: true,
     cli: {
         migrationsDir: "src/migration",
         entitiesDir: "src/entity"
