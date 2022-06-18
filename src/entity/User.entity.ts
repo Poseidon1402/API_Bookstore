@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryColumn } from "typeorm"
 
-@Entity("users")
+@Entity({name: "users"})
 export class User {
 
     @PrimaryColumn({type: 'varchar', length: 25, nullable: false})
@@ -20,4 +20,7 @@ export class User {
 
     @Column({type: 'enum', enum: ['CLIENT', 'ADMIN', 'AUTOR']})
     role: "CLIENT" | "ADMIN" | "AUTOR";
+
+    @Column({type: 'varchar', length: 50, nullable: false})
+    password: string
 }
