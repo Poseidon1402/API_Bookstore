@@ -18,17 +18,10 @@ export class BookOperation {
 
     public static async saveBook(req: Request, res: Response): Promise<Response> {
 
-        try {
-            const book: BookObjectForCreation = req.body;
+        const book: BookObjectForCreation = req.body;
     
-            await BookStore.manager.insert(Book, book);
-        }catch(err: any){
+        await BookStore.manager.insert(Book, book);
             
-            return res.status(400).json({
-                Error: err
-            })
-        }
-
         return res.status(201).json({
             message: 'The book was saved successfully',
         });
