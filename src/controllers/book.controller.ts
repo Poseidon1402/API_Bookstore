@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { DeleteResult, UpdateResult, Like } from "typeorm";
+import { DeleteResult, UpdateResult, Like} from "typeorm";
 import { BookStore } from "../data-source";
 import { BookObjectForCreation, BookObjectForModification } from "../dto/book.dto";
 import { Book } from "../entity/Book.entity";
@@ -19,8 +19,12 @@ export class BookOperation {
     public static async saveBook(req: Request, res: Response): Promise<Response> {
 
         const book: BookObjectForCreation = req.body;
-    
-        await BookStore.manager.insert(Book, book);
+        
+        try{
+            await BookStore.manager.insert(Book, book);
+        }catch(error: any){
+            res.status(400).json({message: error});
+        }
             
         return res.status(201).json({
             message: 'The book was saved successfully',
