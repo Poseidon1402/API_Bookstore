@@ -15,7 +15,7 @@ export class Book {
     @Column({type: "varchar", length: 25, nullable: false})
     category: string;
 
-    @Column()
+    @Column({type: "number"})
     price: number;
     
     @Column({type: "varchar", length: 15, nullable: false})
