@@ -18,8 +18,8 @@ export class User {
     @Column({type: 'date', nullable: false})
     birthDate: Date;
 
-    @Column({type: 'enum', enum: ['CLIENT', 'ADMIN', 'AUTOR']})
-    role: "CLIENT" | "ADMIN" | "AUTOR";
+    @Column({type: 'enum', enum: ['CLIENT', 'AUTOR']})
+    role: "CLIENT" | "AUTOR";
 
     @Column({type: 'varchar', length: 50, nullable: false})
     password: string
