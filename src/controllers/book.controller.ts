@@ -31,6 +31,17 @@ export class BookOperation {
         });
     }
 
+    public static async getOneBook(req: Request, res: Response): Promise<Response> {
+
+        const book: Book = await BookStore.manager.findOne(Book, {
+            where: {
+                book_number: parseInt(req.params.id)
+            }
+        });
+
+        return res.status(200).json(book);
+    }
+
     public static async modifyBookInfo(req: Request, res: Response): Promise<Response> {
 
         const book: BookObjectForModification = req.body;
