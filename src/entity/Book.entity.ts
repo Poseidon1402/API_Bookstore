@@ -4,7 +4,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
 export class Book {
 
     @PrimaryGeneratedColumn()
-    book_number: number;
+    book_number: string;
 
     @Column({type: 'varchar', length: 30, nullable: false})
     title: string;

@@ -35,7 +35,7 @@ export class BookOperation {
 
         const book: Book = await BookStore.manager.findOne(Book, {
             where: {
-                book_number: parseInt(req.params.id)
+                book_number: req.params.id
             }
         });
 
