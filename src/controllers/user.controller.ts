@@ -30,7 +30,7 @@ export class UserOperation {
 
     public static async subscribeUser(req: Request, res: Response): Promise<void> {
         
-        bcrypt.hash(req.body.password, 'mysalt')
+        bcrypt.hash(req.body.password, 8)
             .then((hashedPassword: string) => {
                 
                 req.body.password = hashedPassword;
