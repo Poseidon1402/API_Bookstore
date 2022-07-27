@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import { Like } from "typeorm";
+import { InsertResult, Like, TypeORMError } from "typeorm";
 import { BookStore } from "../data-source";
 import { User } from "../entity/User.entity";
+import * as bcrypt from 'bcrypt';
 
 export class UserOperation {
 
@@ -25,5 +26,38 @@ export class UserOperation {
         });
 
         return res.status(200).json(user);
+    }
+
+    public static async subscribeUser(req: Request, res: Response): Promise<void> {
+        
+        bcrypt.hash(req.body.password, 'mysalt')
+            .then((hashedPassword: string) => {
+                
+                req.body.password = hashedPassword;
+                BookStore.manager.insert(User, req.body)
+                    .then((ans: InsertResult) => {
+
+                        return res.status(201).json(ans);
+                    })
+                    .catch((error: TypeORMError) => {
+
+                        return res.status(500).json({
+                            name: error.name,
+                            message: error.message
+                        });
+                    })
+                    .catch(() => {
+
+                        return res.status(400).json({
+                            message: 'It is an error from the client'
+                        });
+                    })
+            })
+            .catch((err: any) => {
+
+                return res.status(500).json({
+                    message: err.message
+                });
+            });       
     }
 } 
