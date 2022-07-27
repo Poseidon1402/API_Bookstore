@@ -21,6 +21,6 @@ export class User {
     @Column({type: 'enum', enum: ['CLIENT', 'AUTOR']})
     role: "CLIENT" | "AUTOR";
 
-    @Column({type: 'varchar', length: 50, nullable: false})
+    @Column({type: 'varchar', length: 150, nullable: false})
     password: string
 }
