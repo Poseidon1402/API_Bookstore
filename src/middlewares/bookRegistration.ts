@@ -7,8 +7,8 @@ export class BookRegistration {
 
     public static validateData(req: Request, res: Response, next: NextFunction){
 
-        const { title, desc, category, price, page_number, language} = req.body;
-        const book: Book = new Book(title, desc, category, price, page_number, language);
+        const { title, description, category, price, page_number, language} = req.body;
+        const book: Book = new Book(title, description, category, price, page_number, language);
 
         validate(book)
             .then(errors => {
