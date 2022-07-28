@@ -35,9 +35,12 @@ export class UserOperation {
                 
                 req.body.password = hashedPassword;
                 BookStore.manager.insert(User, req.body)
-                    .then((ans: InsertResult) => {
+                    .then(async(ans: InsertResult) => {
 
-                        return res.status(201).json(ans);
+                        const user: User = await BookStore.manager.findOneBy(User, {
+                            code_user: ans.identifiers[0].code_user
+                        })
+                        return res.status(201).json(user);
                     })
                     .catch((error: TypeORMError) => {
 
