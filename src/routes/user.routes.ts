@@ -9,7 +9,8 @@ userRouter.get('/:id', UserOperation.retrieveSingleUser);
 userRouter.post('', 
     [
         UserSubscription.checkUserDuplication,
-        UserSubscription.setUserIdentification
+        UserSubscription.setUserIdentification,
+        UserSubscription.validateUserInformation
     ],
     UserOperation.subscribeUser
 );

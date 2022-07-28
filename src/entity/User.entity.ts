@@ -17,20 +17,20 @@ export class User {
     @Column({type: 'varchar', length: 25, nullable: false})
     @IsNotEmpty()
     @MinLength(4, {
-        message: 'The length should be more or equal to 5, actual $value'
+        message: `The length should be more or equal to 5`
     })
     @MaxLength(25, {
-        message: 'The length should be less or equal to 25, actual $value'
+        message: 'The length should be less or equal to 25'
     })
     firstName: string;
 
     @Column({type: 'varchar', length: 30, nullable: false})
     @IsNotEmpty()
     @MinLength(5, {
-        message: 'The length should be more or equal to 5, actual $value'
+        message: 'The length should be more or equal to 5'
     })
     @MaxLength(25, {
-        message: 'The length should be less or equal to 25, actual $value'
+        message: 'The length should be less or equal to 25'
     })
     lastName: string;
 
@@ -52,10 +52,10 @@ export class User {
     @Length(8, 25)
     @IsNotEmpty() 
     @MinLength(5, {
-        message: 'The length should be more or equal to 8, actual $value'
+        message: 'The length should be more or equal to 8'
     })
     @MaxLength(25, {
-        message: 'The length should be less or equal to 25, actual $value'
+        message: 'The length should be less or equal to 25'
     })
     password: string
 

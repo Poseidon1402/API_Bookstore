@@ -1,6 +1,7 @@
+import { validate } from "class-validator";
 import { NextFunction, Request, Response } from "express";
-import * as moment from "moment";
 import { BookStore } from "../data-source";
+import { UserObjectInterface, ValidationErrorInterface } from "../dto/utilities";
 import { User } from "../entity/User.entity";
 
 export class UserSubscription {
@@ -31,5 +32,30 @@ export class UserSubscription {
         });
 
         next();
+    }
+
+    public static validateUserInformation(req: Request, res: Response, next: NextFunction){
+        const userObj: UserObjectInterface = req.body;
+        let user: User = new User(userObj.code_user, userObj.firstName, userObj.lastName,
+            userObj.email, userObj.birthDate, userObj.role, userObj.password);
+        
+        validate(user)
+            .then(errors => {
+                // errors is an array of validation errors
+                if (errors.length > 0) {
+                    
+                    let validatorFailed: ValidationErrorInterface[] = [];
+                    errors.forEach(err => {
+                        validatorFailed.push({
+                            property: err.property,
+                            message: err.constraints
+                        });
+                    });
+
+                    return res.status(400).json(validatorFailed);
+                }
+
+                next();
+            });
     }
 }
