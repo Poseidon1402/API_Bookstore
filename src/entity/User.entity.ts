@@ -1,5 +1,4 @@
 import { 
-    IsDate, 
     IsEmail, 
     IsIn, 
     IsNotEmpty, 
@@ -17,7 +16,7 @@ export class User {
 
     @Column({type: 'varchar', length: 25, nullable: false})
     @IsNotEmpty()
-    @MinLength(5, {
+    @MinLength(4, {
         message: 'The length should be more or equal to 5, actual $value'
     })
     @MaxLength(25, {
@@ -42,7 +41,6 @@ export class User {
 
     @Column({type: 'date', nullable: false})
     @IsNotEmpty()
-    @IsDate()
     birthDate: Date;
 
     @Column({type: 'enum', enum: ['CLIENT', 'AUTHOR']})
@@ -60,4 +58,16 @@ export class User {
         message: 'The length should be less or equal to 25, actual $value'
     })
     password: string
+
+    constructor(code_user: string, firstName: string, lastName: string, 
+        email: string, birthDate: string, role: "CLIENT" | "AUTHOR", password: string){
+        this.code_user = code_user;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.birthDate = new Date(birthDate);
+        this.role = role;
+        this.password = password;
+        
+    }
 }
