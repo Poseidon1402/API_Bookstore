@@ -18,7 +18,10 @@ export class BookOperation {
 
     public static async saveBook(req: Request, res: Response): Promise<Response> {
 
-        const book: BookObjectForCreation = req.body;
+        const book: BookObjectForCreation = {
+            ...req.body,
+            bookFileUrl: `${req.protocol}://${req.get('host')}/uploads/${(req as any).file.filename}`
+        };
         
         try{
             await BookStore.manager.insert(Book, book);
