@@ -28,7 +28,6 @@ export class Book {
     price: number;
     
     @Column({type: "varchar", length: 15, nullable: false})
-    @IsNumber()
     @IsNotEmpty()
     page_number: string;
 
@@ -41,12 +40,12 @@ export class Book {
     bookFileUrl: string
 
     constructor(title: string, description: string, category: string,
-        price: number, page_number: string, language: string){
+        price: string, page_number: string, language: string){
 
             this.title = title;
             this.description = description;
             this.category = category;
-            this.price = price;
+            this.price = parseInt(price);
             this.page_number = page_number;
             this.language = language;
     }

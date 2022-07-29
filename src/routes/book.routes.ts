@@ -8,8 +8,8 @@ export const bookRouter: express.Router = express.Router();
 bookRouter.get('', BookOperation.retrieveAllBooks);
 bookRouter.post('', 
     [
+        FileUploader.file.single('file'),
         BookRegistration.validateData,
-        FileUploader.file.single('file')
     ],
     BookOperation.saveBook
 );

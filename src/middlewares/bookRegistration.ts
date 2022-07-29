@@ -13,7 +13,7 @@ export class BookRegistration {
         validate(book)
             .then(errors => {
                 // errors is an array of validation errors
-                /*if (errors.length > 0) {
+                if (errors.length > 0) {
                     
                     let validatorFailed: ValidationErrorInterface[] = [];
                     errors.forEach(err => {
@@ -24,7 +24,7 @@ export class BookRegistration {
                     });
 
                     return res.status(400).json(validatorFailed);
-                }*/
+                }
 
                 next();
             });
