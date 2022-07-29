@@ -6,4 +6,4 @@ build/
 tmp/
 temp/
 .env
-public/
+public/uploads/*
