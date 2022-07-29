@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsNumber, Length } from "class-validator";
+import { IsInt, IsNotEmpty, IsNumber, Length, MaxLength } from "class-validator";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity()
@@ -36,6 +36,11 @@ export class Book {
     @Length(2, 10)
     @IsNotEmpty()
     language: string;
+
+    @Column({type: 'varchar', length: 125, nullable: false})
+    @MaxLength(125)
+    @IsNotEmpty()
+    bookFileUrl: string
 
     constructor(title: string, description: string, category: string,
         price: number, page_number: string, language: string){
