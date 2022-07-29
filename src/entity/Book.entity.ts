@@ -38,8 +38,6 @@ export class Book {
     language: string;
 
     @Column({type: 'varchar', length: 125, nullable: false})
-    @MaxLength(125)
-    @IsNotEmpty()
     bookFileUrl: string
 
     constructor(title: string, description: string, category: string,
