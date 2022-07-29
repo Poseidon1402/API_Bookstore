@@ -9,7 +9,7 @@ const server: http.Server = http.createServer(app);
 const port: number | string = process.env.PORT || 4000;
 
 app.use(express.json());
-app.use(express.static(__dirname+'../public'));
+app.use(express.static(__dirname.split('src/')[0]+'public'));
 
 // all base routes
 app.use('/books', bookRouter);
