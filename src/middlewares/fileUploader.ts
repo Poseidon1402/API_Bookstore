@@ -35,7 +35,7 @@ export class FileConfiguration {
 
 export class FileUploader {
 
-    public static file = multer({
+    public static file: multer.Multer = multer({
         storage: new FileConfiguration().getStorage(),
         fileFilter: FileUploader.fileFilter
     });
