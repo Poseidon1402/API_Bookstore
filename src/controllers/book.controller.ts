@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { DeleteResult, UpdateResult, Like} from "typeorm";
+import * as fs from 'fs';
+import { UpdateResult, Like} from "typeorm";
 import { BookStore } from "../data-source";
 import { BookObjectForCreation, BookObjectForModification } from "../dto/book.dto";
 import { Book } from "../entity/Book.entity";
@@ -58,17 +59,31 @@ export class BookOperation {
         })
     }
 
-    public static async removeBook(req: Request, res: Response): Promise<Response> {
+    public static async removeBook(req: Request, res: Response) {
         
-        const book: DeleteResult = await BookStore.manager.delete(Book, {
+        BookStore.manager.findOneBy(Book, {
             book_number: req.params.id
         })
+        .then((book: Book): void | Response => {
 
-        // when no ressource was deleted
-        if(book.affected === 0) return res.status(404).json({ message: 'Ressource Not Found' });
+            if(!book) return res.status(404).json({message: "Ressource not found !"});
 
-        return res.status(200).json({
-            message: 'The book was deleted successfully'
+            const filename = book.bookFileUrl.split('/uploads/')[1];
+                const filePath = `${__dirname.split('/src')[0]}/public/uploads/${filename}`;
+                
+                fs.unlink(filePath, () => {
+                    
+                    BookStore.manager.delete(Book, {
+                        book_number: req.params.id
+                    })
+                    .then( () => {
+            
+                        return res.status(200).json({
+                            message: 'The ressource was deleted successfully',
+                        })
+                    })
+                    .catch( (err: any): Response => res.status(400).json({ err })) 
+                });
         });
     }
 }
