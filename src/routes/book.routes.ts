@@ -9,7 +9,7 @@ bookRouter.get('', BookOperation.retrieveAllBooks);
 bookRouter.post('', 
     [
         BookRegistration.validateData,
-        FileUploader.file.single('bookFile')
+        FileUploader.file.single('file')
     ],
     BookOperation.saveBook
 );

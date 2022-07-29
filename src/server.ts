@@ -17,7 +17,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use(express.json());
-app.use(express.static(__dirname.split('/src')[0]+'/public'));
+app.use(express.static(__dirname+'/../public'));
 
 // all base routes
 app.use('/books', bookRouter);
