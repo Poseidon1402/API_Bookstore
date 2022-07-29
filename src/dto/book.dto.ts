@@ -4,7 +4,8 @@ export interface BookObjectForCreation {
 	category: string,
 	price: number,
 	page_number: string,
-	language: string
+	language: string,
+	bookFileUrl: string
 }
 
 export interface BookObjectForModification {
@@ -13,5 +14,5 @@ export interface BookObjectForModification {
 	category?: string,
 	price?: number,
 	page_number?: string,
-	language?: string
+	language?: string,
 }	
