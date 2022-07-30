@@ -40,8 +40,27 @@ export class AuthenticationGuard {
 
             (req as any).clientId = decoded.id;
             (req as any).clientEmail = decoded.email;
-            
+            (req as any).role = decoded.role;
+
             next();
         });
+    }
+
+    public static async isClient(req: Request, res: Response, next: NextFunction){
+
+        if((req as any).role !== "CLIENT") return res.status(401).json({
+            message: "You are not a client."
+        });
+
+        next();
+    }
+
+    public static async isAuthor(req: Request, res: Response, next: NextFunction){
+
+        if((req as any).role !== "AUTHOR") return res.status(401).json({
+            message: "Only author can access this ressource/functionality."
+        });
+
+        next();
     }
 }
