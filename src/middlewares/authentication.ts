@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
+import { jwtConfig } from "../config/jwt.config";
 import { BookStore } from "../data-source";
 import { User } from "../entity/User.entity";
 
@@ -30,6 +31,17 @@ export class AuthenticationGuard {
             });
         }
 
-        
+        jwt.verify(token.split(' ')[1], jwtConfig.secret, (err: any, decoded: any) => {
+            if(err){
+                return res.status(401).json({
+                    message: err.message 
+                });
+            }
+
+            (req as any).clientId = decoded.id;
+            (req as any).clientEmail = decoded.email;
+            
+            next();
+        });
     }
 }
