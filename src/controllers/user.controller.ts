@@ -1,8 +1,10 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { InsertResult, Like, TypeORMError } from "typeorm";
 import { BookStore } from "../data-source";
 import { User } from "../entity/User.entity";
+import * as jwt from "jsonwebtoken";
 import * as bcrypt from 'bcrypt';
+import { jwtConfig } from "../config/jwt.config";
 
 export class UserOperation {
 
@@ -63,4 +65,34 @@ export class UserOperation {
                 });
             });       
     }
-} 
+}
+
+export class UserAuthenticator {
+
+    public static async authenticate(req: Request, res: Response, next: NextFunction){
+
+        BookStore.getRepository(User).findOneBy({
+            email: req.body.email
+        })
+        .then((user: User) => {
+            
+            bcrypt.compare(req.body.password, user.password)
+                .then((valid: boolean) => {
+                    
+                    if(!valid){
+                        return res.status(401).json({
+                            message: "Invalid password."
+                        });
+                    }
+
+                    return res.status(200).json({
+                        email: user.email,
+                        role: user.role,
+                        jwt: jwt.sign(jwtConfig.data(user), jwtConfig.secret, {
+                            expiresIn: 86400        // one day
+                        })
+                    })
+                })
+        })
+    }
+}
