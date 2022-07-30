@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { UserAuthenticator, UserOperation } from "../controllers/user.controller";
+import { userLoginHandler } from "../middlewares/authentication";
 import { UserSubscription } from "../middlewares/userSubscription";
 
 export const loginRouter = Router();
@@ -13,4 +14,8 @@ loginRouter.post('/subscribe',
     UserOperation.subscribeUser
 );
 
-loginRouter.post('/login', UserAuthenticator.authenticate);
+loginRouter.post('/login', 
+    [
+        userLoginHandler.isUserExist
+    ],
+UserAuthenticator.authenticate);
