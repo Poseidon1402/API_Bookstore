@@ -71,7 +71,7 @@ export class UserAuthenticator {
 
     public static async authenticate(req: Request, res: Response, next: NextFunction){
 
-        BookStore.getRepository(User).findOneBy({
+        BookStore.manager.findOneBy(User, {
             email: req.body.email
         })
         .then((user: User) => {
@@ -91,8 +91,9 @@ export class UserAuthenticator {
                         jwt: jwt.sign(jwtConfig.data(user), jwtConfig.secret, {
                             expiresIn: 86400        // one day
                         })
-                    })
+                    });
                 })
+                
         })
     }
 }

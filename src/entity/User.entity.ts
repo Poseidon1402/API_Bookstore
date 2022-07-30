@@ -48,7 +48,7 @@ export class User {
     @IsNotEmpty()
     role: "CLIENT" | "AUTHOR";
 
-    @Column({type: 'varchar', length: 150, nullable: false, select: false})
+    @Column({type: 'varchar', length: 150, nullable: false})
     @Length(8, 25)
     @IsNotEmpty() 
     @MinLength(5, {
