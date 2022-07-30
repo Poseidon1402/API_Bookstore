@@ -4,6 +4,7 @@ import { BookStore } from './data-source';
 import { bookRouter } from './routes/book.routes';
 import { userRouter } from './routes/user.routes';
 import { NextFunction, Request, Response } from 'express';
+import { loginRouter } from './routes/auth.routes';
 
 const app: express.Express = express();
 const server: http.Server = http.createServer(app);
@@ -22,6 +23,7 @@ app.use(express.static(__dirname+'/../public'));
 // all base routes
 app.use('/books', bookRouter);
 app.use('/users', userRouter);
+app.use('', loginRouter);
 
 BookStore.initialize()
     .then(() => {
