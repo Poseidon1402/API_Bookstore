@@ -27,9 +27,9 @@ app.use('', loginRouter);
 
 BookStore.initialize()
     .then(() => {
-        console.log('initialized')
+        BookStore.synchronize(false);
         return;
-    })
+    });
 
 server.listen(port, () => {
     console.log(`The server is listening on port ${port}...`);
