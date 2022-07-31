@@ -1,4 +1,5 @@
 import { Book } from "../entity/Book.entity";
+import { Purchase } from "../entity/Purchase.entity";
 import { User } from "../entity/User.entity";
 
 require('dotenv').config();
@@ -12,7 +13,7 @@ export const dbconfig: any = {
     database: process.env.DB_NAME,
     connectTimeoutMS: 5000,
     logging: false,
-    entities: [Book, User],
+    entities: [Book, User, Purchase],
     autoLoadEntities: true,
     synchronize: true,
     cli: {
