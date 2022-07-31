@@ -12,7 +12,7 @@ export class Purchase {
     payed: boolean
 
     @ManyToOne(() => User, (user) => user.code_user)
-    author: User
+    user: User
 
     @ManyToOne(() => Book, (book) => book.book_number)
     book: Book
