@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { BookOperation } from '../controllers/book.controller';
+import { BookPurchase } from '../controllers/purchase.controller';
 import { AuthenticationGuard } from '../middlewares/authentication';
 import { BookRegistration } from '../middlewares/bookRegistration';
 import { FileUploader } from '../middlewares/fileUploader';
@@ -16,6 +17,12 @@ bookRouter.post('',
     ],
     BookOperation.saveBook
 );
+bookRouter.post('/purchase', 
+    [
+        AuthenticationGuard.isJwtValid,
+    ],
+    BookPurchase.addToCart
+)
 bookRouter.get('/:id', BookOperation.getOneBook);
 bookRouter.patch('/:id', BookOperation.modifyBookInfo);
 bookRouter.delete('/:id', BookOperation.removeBook);

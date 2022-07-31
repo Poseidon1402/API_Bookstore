@@ -18,9 +18,12 @@ export class BookPurchase {
             code_user: (req as any).clientId
         });
 
+        await BookStore.manager.save(purchase);
+
         return res.status(201).json({
             status: "201",
-            message: "The book was successfully added inside your cart"
+            message: "The book was successfully added inside your cart",
+            purchase: purchase
         });
     }
 }
