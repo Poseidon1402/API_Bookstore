@@ -1,4 +1,4 @@
-import { Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Book } from "./Book.entity";
 import { User } from "./User.entity";
 
@@ -7,6 +7,9 @@ export class Purchase {
 
     @PrimaryGeneratedColumn()
     id: number
+
+    @Column({type: "boolean", default: false})
+    payed: boolean
 
     @ManyToOne(() => User, (user) => user.code_user)
     author: User
