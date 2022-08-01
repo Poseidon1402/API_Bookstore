@@ -17,11 +17,17 @@ bookRouter.post('',
     ],
     BookOperation.saveBook
 );
-bookRouter.post('/purchase', 
+bookRouter.post('/addToCart', 
     [
         AuthenticationGuard.isJwtValid,
     ],
     BookPurchase.addToCart
+);
+bookRouter.post('/purchase',
+    [
+        AuthenticationGuard.isJwtValid
+    ],
+    BookPurchase.pay
 )
 bookRouter.get('/:id', BookOperation.getOneBook);
 bookRouter.patch('/:id', BookOperation.modifyBookInfo);
