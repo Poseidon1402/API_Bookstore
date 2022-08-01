@@ -38,4 +38,11 @@ bookRouter.patch('/:id',
     ],
     BookOperation.modifyBookInfo
 );
-bookRouter.delete('/:id', BookOperation.removeBook);
+bookRouter.delete('/:id', 
+    [
+        AuthenticationGuard.isJwtValid,
+        AuthenticationGuard.isAuthor,
+        AuthenticationGuard.isOwner
+    ],
+    BookOperation.removeBook
+);
