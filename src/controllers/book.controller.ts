@@ -4,6 +4,7 @@ import { UpdateResult, Like} from "typeorm";
 import { BookStore } from "../data-source";
 import { BookObjectForCreation, BookObjectForModification } from "../dto/book.dto";
 import { Book } from "../entity/Book.entity";
+import { User } from "../entity/User.entity";
 
 export class BookOperation {
 
@@ -21,7 +22,8 @@ export class BookOperation {
 
         const book: BookObjectForCreation = {
             ...req.body,
-            bookFileUrl: `${req.protocol}://${req.get('host')}/uploads/${(req as any).file.filename}`
+            bookFileUrl: `${req.protocol}://${req.get('host')}/uploads/${(req as any).file.filename}`,
+            user: await BookStore.manager.findOneBy(User, {email: (req as any).clientEmail})
         };
         
         try{

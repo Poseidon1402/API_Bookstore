@@ -1,3 +1,5 @@
+import { User } from "../entity/User.entity";
+
 export interface BookObjectForCreation {
     title: string,
 	description: string,
@@ -5,7 +7,8 @@ export interface BookObjectForCreation {
 	price: number,
 	page_number: string,
 	language: string,
-	bookFileUrl: string
+	bookFileUrl: string,
+	user: User 
 }
 
 export interface BookObjectForModification {
