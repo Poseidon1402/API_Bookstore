@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { jwtConfig } from "../config/jwt.config";
 import { BookStore } from "../data-source";
+import { Book } from "../entity/Book.entity";
 import { User } from "../entity/User.entity";
 
 export class userLoginHandler {
@@ -22,7 +23,7 @@ export class userLoginHandler {
 
 export class AuthenticationGuard {
 
-    public static async isJwtValid(req: Request, res: Response, next: NextFunction){
+    public static isJwtValid(req: Request, res: Response, next: NextFunction){
         
         const token = req.headers['authorization'];
         if(!token){
@@ -46,7 +47,7 @@ export class AuthenticationGuard {
         });
     }
 
-    public static async isClient(req: Request, res: Response, next: NextFunction){
+    public static isClient(req: Request, res: Response, next: NextFunction){
 
         if((req as any).role !== "CLIENT") return res.status(401).json({
             message: "You are not a client."
@@ -55,11 +56,33 @@ export class AuthenticationGuard {
         next();
     }
 
-    public static async isAuthor(req: Request, res: Response, next: NextFunction){
+    public static isAuthor(req: Request, res: Response, next: NextFunction){
 
         if((req as any).role !== "AUTHOR") return res.status(401).json({
             message: "Only author can access this ressource/functionality."
         });
+
+        next();
+    }
+
+    public static async isOwner(req: Request, res: Response, next: NextFunction){
+
+        const book: Book = await BookStore.manager.findOne(Book, {
+            where: {
+                book_number: req.params.id
+            },
+            relations: {
+                user: true
+            }
+        });
+
+        if((req as any).clientEmail !== book.user.email){
+
+            return res.status(401).json({
+                status: "401",
+                message: "Forbidden ! This ressource is not yours"
+            });
+        }
 
         next();
     }

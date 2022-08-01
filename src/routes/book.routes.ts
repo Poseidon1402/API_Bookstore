@@ -30,5 +30,12 @@ bookRouter.post('/purchase',
     BookPurchase.pay
 )
 bookRouter.get('/:id', BookOperation.getOneBook);
-bookRouter.patch('/:id', BookOperation.modifyBookInfo);
+bookRouter.patch('/:id', 
+    [
+        AuthenticationGuard.isJwtValid,
+        AuthenticationGuard.isAuthor,
+        AuthenticationGuard.isOwner
+    ],
+    BookOperation.modifyBookInfo
+);
 bookRouter.delete('/:id', BookOperation.removeBook);
