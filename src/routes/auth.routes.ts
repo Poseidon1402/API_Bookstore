@@ -18,4 +18,5 @@ loginRouter.post('/login',
     [
         userLoginHandler.isUserExist
     ],
-UserAuthenticator.authenticate);
+    UserAuthenticator.authenticate
+);

@@ -1,5 +1,6 @@
 import { IsInt, IsNotEmpty, IsNumber, Length, MaxLength } from "class-validator";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { User } from "./User.entity";
 
 @Entity()
 export class Book {
@@ -39,6 +40,9 @@ export class Book {
     @Column({type: 'varchar', length: 125, nullable: false})
     bookFileUrl: string
 
+    @ManyToOne(() => User, (user) => user.code_user)
+    user: User
+    
     constructor(title: string, description: string, category: string,
         price: string, page_number: string, language: string){
 
