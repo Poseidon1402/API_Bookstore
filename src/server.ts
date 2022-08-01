@@ -5,6 +5,7 @@ import { bookRouter } from './routes/book.routes';
 import { userRouter } from './routes/user.routes';
 import { NextFunction, Request, Response } from 'express';
 import { loginRouter } from './routes/auth.routes';
+import { purchaseViewerRouter } from './routes/purchase.routes';
 
 const app: express.Express = express();
 const server: http.Server = http.createServer(app);
@@ -24,6 +25,7 @@ app.use(express.static(__dirname+'/../public'));
 app.use('/books', bookRouter);
 app.use('/users', userRouter);
 app.use('', loginRouter);
+app.use('', purchaseViewerRouter);
 
 BookStore.initialize()
     .then(() => {

@@ -69,3 +69,22 @@ export class BookPurchase {
         }
     }
 }
+
+
+export class PurchaseViewer {
+
+    public static async fetchAllPurchaseLinkedTheConnectedUser(req: Request, res: Response) {
+ 
+        const purchase: Purchase[] = await BookStore.manager.find(Purchase, {
+            relations: {
+                book: true
+            },
+            where: {
+                user: await BookStore.manager.findOneBy(User, {email: (req as any).clientEmail}),
+                payed: req.query.payed as unknown as boolean
+            }
+        });
+
+        return res.status(200).json(purchase);
+    }
+}
